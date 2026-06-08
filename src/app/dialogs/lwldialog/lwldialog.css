@@ -1,0 +1,10 @@
+.custom-drawer-panel .p-drawer-content {
+    overflow-y: auto !important;
+    scrollbar-width: thin;
+}
+
+
+.lwl-responsive-drawer .p-drawer-content {
+    overflow-y: auto !important;
+    scrollbar-width: thin;
+}

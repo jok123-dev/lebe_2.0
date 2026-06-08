@@ -1,0 +1,127 @@
+<p-fileUpload #uploader mode="advanced" [multiple]="true" [customUpload]="true" (uploadHandler)="onUpload($event)">
+
+                    <ng-template pTemplate="header" let-files let-chooseCallback="chooseCallback"
+                        let-clearCallback="clearCallback" let-uploadCallback="uploadCallback">
+                        <div
+                            class="flex items-center justify-between w-full gap-2 p-3 bg-neutral-50 rounded-t-2xl border-b border-neutral-100">
+                            <div class="flex items-center gap-2">
+                                <button (click)="chooseCallback()"
+                                    class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold bg-white border border-blue-400 text-blue-400 hover:bg-blue-50 rounded-xl transition-all cursor-pointer select-none">
+                                    <i class="pi pi-plus text-[10px]"></i>
+                                    <span>Auswählen</span>
+                                </button>
+
+                                <button (click)="uploadCallback()" [disabled]="!files || files.length === 0"
+                                    [ngClass]="{'opacity-30 cursor-not-allowed': !files || files.length === 0}"
+                                    class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold bg-neutral-900 hover:bg-neutral-800 text-white rounded-xl transition-all cursor-pointer select-none">
+                                    <i class="pi pi-upload text-[10px]"></i>
+                                    <span>Hochladen</span>
+                                </button>
+
+                                @if (files && files.length > 0) {
+                                <button (click)="clearCallback()"
+                                    class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-transparent text-neutral-400 hover:text-neutral-600 transition-all cursor-pointer select-none">
+                                    <span>Alle entfernen</span>
+                                </button>
+                                }
+                            </div>
+                        </div>
+                    </ng-template>
+
+                    <ng-template pTemplate="content" let-files let-removeFileCallback="removeFileCallback">
+                        <div class="p-3 space-y-2 bg-white rounded-b-2xl min-h-[120px]">
+
+                            @if (uploadService.uploadProgress() > 0) {
+                            <div class="space-y-1 mb-4">
+                                <div
+                                    class="flex justify-between items-center text-[10px] font-bold text-blue-600 uppercase tracking-wider">
+                                    <span>Dateien werden übertragen...</span>
+                                    <span>{{ uploadService.uploadProgress() }}%</span>
+                                </div>
+                                <div class="w-full bg-neutral-100 rounded-full h-2 overflow-hidden">
+                                    <div class="bg-blue-600 h-full rounded-full transition-all duration-150 ease-out"
+                                        [style.width.%]="uploadService.uploadProgress()">
+                                    </div>
+                                </div>
+                            </div>
+                            }
+
+                            @for (file of files; track file.name; let i = $index) {
+                            <div
+                                class="flex items-center justify-between p-3 border border-neutral-100 rounded-xl bg-neutral-50/50">
+                                <div class="flex items-center gap-3 min-w-0">
+                                    @if (file.objectURL) {
+                                    <img [src]="file.objectURL" [alt]="file.name"
+                                        class="w-9 h-9 object-cover rounded-lg shrink-0 border border-neutral-100" />
+                                    } @else {
+                                    <div
+                                        class="w-9 h-9 rounded-lg bg-neutral-100 flex items-center justify-center shrink-0 text-neutral-400 border border-neutral-100">
+                                        <i class="pi pi-file text-xs"></i>
+                                    </div>
+                                    }
+                                    <div class="min-w-0">
+                                        <p class="text-xs font-semibold text-neutral-700 truncate max-w-[220px]">{{
+                                            file.name }}</p>
+                                        <p class="text-[10px] text-neutral-400 font-medium">{{ (file.size /
+                                            1024).toFixed(1) }} KB</p>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center gap-3 shrink-0">
+                                    <span
+                                        class="text-[9px] px-2 py-0.5 rounded-md font-bold uppercase tracking-wider bg-neutral-200/60 text-neutral-500 border border-neutral-200/20">
+                                        Wartend
+                                    </span>
+                                    <button (click)="removeFileCallback(i)"
+                                        class="w-7 h-7 rounded-lg flex items-center justify-center border border-neutral-200 text-neutral-400 hover:text-neutral-600 hover:bg-white transition-all cursor-pointer">
+                                        <i class="pi pi-times text-[10px]"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            }
+
+                            @for (file of uploadService.uploadedFilesList(); track file.name) {
+                            <div
+                                class="flex items-center justify-between p-3 border border-emerald-100 rounded-xl bg-emerald-50/20 @tabFade">
+                                <div class="flex items-center gap-3 min-w-0">
+                                    @if (file.objectURL) {
+                                    <img [src]="file.objectURL" [alt]="file.name"
+                                        class="w-9 h-9 object-cover rounded-lg shrink-0 border border-emerald-100/50 opacity-80" />
+                                    } @else {
+                                    <div
+                                        class="w-9 h-9 rounded-lg bg-emerald-50 flex items-center justify-center shrink-0 text-emerald-500 border border-emerald-100/30">
+                                        <i class="pi pi-file text-xs"></i>
+                                    </div>
+                                    }
+                                    <div class="min-w-0">
+                                        <p class="text-xs font-semibold text-emerald-800 truncate max-w-[220px]">{{
+                                            file.name }}</p>
+                                        <p class="text-[10px] text-emerald-500 font-medium">{{ (file.size /
+                                            1024).toFixed(1) }} KB</p>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center gap-3 shrink-0">
+                                    <span
+                                        class="text-[9px] px-2 py-0.5 rounded-md font-bold uppercase tracking-wider bg-emerald-100 text-emerald-700 border border-emerald-200/30">
+                                        Hochgeladen
+                                    </span>
+                                    <div
+                                        class="w-7 h-7 rounded-lg flex items-center justify-center bg-emerald-500 text-white shadow-sm shadow-emerald-200">
+                                        <i class="pi pi-check text-[9px] font-bold"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            }
+
+                            @if (files.length === 0 && uploadService.uploadedFilesList().length === 0) {
+                            <div class="flex flex-col items-center justify-center py-8 text-neutral-300 select-none">
+                                <i class="pi pi-cloud-upload text-3xl mb-2"></i>
+                                <p class="text-[11px] font-semibold text-neutral-400">Zieh deine Dateien hierher oder
+                                    klicke auf Auswählen</p>
+                            </div>
+                            }
+
+                        </div>
+                    </ng-template>
+                </p-fileUpload>

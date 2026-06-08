@@ -1,0 +1,76 @@
+@if(data()) {
+<div class="py-4 space-y-8">
+    <!--
+    <section>
+        <h4 class="text-[10px] font-bold text-neutral-400 uppercase tracking-widest mb-3">Informationen
+        </h4>
+        <p class="text-sm text-neutral-600 leading-relaxed bg-neutral-50 p-4 rounded-2xl border border-neutral-100">
+            <span class="font-semibold">Kompetenz: </span>
+            <span>{{competencegridDataService.getLernfeldNachId(data().lernfeldId).beschreibung }} </span>
+            <br>
+            <span class="font-semibold">Lernwegeliste:</span> <span> {{ data().text }}</span>
+        </p>
+    </section>
+    -->
+    <section>
+        <h4 class="text-[10px] font-bold text-neutral-400 uppercase tracking-widest mb-3">Kursfortschritt</h4>
+
+        <section class="mt-3 bg-neutral-50 p-4 rounded-2xl border border-neutral-100">
+            @if (kursFortschritt()) {
+            <div class="space-y-3">
+                <div class="w-full h-1.5 bg-neutral-200 rounded-full overflow-hidden flex shadow-inner">
+                    <div [style.width.%]="kursFortschritt()?.erledigtProzent"
+                        class="h-full bg-green-500 transition-all duration-500 ease-out" title="Erledigt">
+                    </div>
+                    <div [style.width.%]="kursFortschritt()?.inArbeitProzent"
+                        class="h-full bg-orange-400 transition-all duration-500 ease-out" title="In Arbeit">
+                    </div>
+                </div>
+                <div class="grid grid-cols-3 gap-2 text-[11px] font-medium text-neutral-500 text-center">
+                    <div class="bg-white p-1.5 rounded-lg border border-neutral-100">
+                        <span class="block text-green-600 font-bold text-sm">{{ kursFortschritt()?.details?.erledigt
+                            }}</span>
+                        Erledigt
+                    </div>
+                    <div class="bg-white p-1.5 rounded-lg border border-neutral-100">
+                        <span class="block text-orange-500 font-bold text-sm">{{ kursFortschritt()?.details?.inArbeit
+                            }}</span>
+                        In Arbeit
+                    </div>
+                    <div class="bg-white p-1.5 rounded-lg border border-neutral-100">
+                        <span class="block text-neutral-400 font-bold text-sm">{{ kursFortschritt()?.details?.offen
+                            }}</span>
+                        Offen
+                    </div>
+                </div>
+
+                <div class="text-[10px] text-neutral-400 text-right italic">
+                    Auswertung von insgesamt {{ kursFortschritt()?.details?.gesamt }} Schülern in diesem Kurs.
+                </div>
+            </div>
+            } @else {
+            <p class="text-xs text-neutral-400 italic">Keine Kurszuordnung für dieses Kompetenzraster gefunden.</p>
+            }
+        </section>
+    </section>
+
+    <section>
+        <h4 class="text-[10px] font-bold text-neutral-400 uppercase tracking-widest mb-4">Status
+            aktualisieren</h4>
+        <div class="grid grid-cols-3 gap-3">
+            <button (click)="updateStatus('offen')" [class.bg-neutral-100]="status() === 'offen'"
+                class="p-4 text-xs font-bold rounded-2xl border border-neutral-200 transition-all active:scale-95">
+                ⚪ Offen
+            </button>
+            <button (click)="updateStatus('in_arbeit')" [class.bg-pastel-orange-bg]="status() === 'in_arbeit'"
+                class="p-4 text-xs font-bold rounded-2xl border border-pastel-orange-border text-pastel-orange-text transition-all active:scale-95">
+                🟠 In Arbeit
+            </button>
+            <button (click)="updateStatus('erledigt')" [class.bg-green-100]="status() === 'erledigt'"
+                class="p-4 text-xs font-bold rounded-2xl border border-green-200 text-green-700 transition-all active:scale-95">
+                🟢 Erledigt
+            </button>
+        </div>
+    </section>
+</div>
+}

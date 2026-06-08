@@ -1,0 +1,106 @@
+<div class="h-[calc(100vh-65px)] flex items-center justify-center dark:bg-surface-950 px-4 transition-colors duration-200">
+    
+    <div class="w-full max-w-md bg-white dark:bg-surface-900 p-8 rounded-2xl shadow-xl border border-surface-200 dark:border-surface-800">
+        
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-semibold text-surface-900 dark:text-surface-0 tracking-tight">
+                Willkommen bei <span class="font-bold text-blue-600">LeBe AI</span>
+            </h1>
+            <p class="text-sm text-surface-500 dark:text-surface-400 mt-2">
+                Melde dich an, um auf dein Dashboard zuzugreifen.
+            </p>
+        </div>
+
+        @if (errorMessage()) {
+            <div class="mb-5 p-4 rounded-xl bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-900/50 flex items-center gap-3 text-red-600 dark:text-red-400 text-sm animate-fadein">
+                <i class="pi pi-exclamation-circle text-lg shrink-0"></i>
+                <span class="font-medium">{{ errorMessage() }}</span>
+            </div>
+        }
+
+        <form (submit)="onLoginSubmit($event)" class="space-y-5">
+            
+            <div>
+                <label for="username" class="block text-xs font-semibold tracking-wider text-surface-500 dark:text-surface-400 uppercase mb-2">
+                    Benutzername
+                </label>
+                <div class="relative">
+                    <i class="pi pi-user absolute left-4 top-1/2 -translate-y-1/2 text-surface-400 text-base"></i>
+                    <input 
+                        type="text" 
+                        id="username"
+                        [ngModel]="username()" 
+                        (ngModelChange)="username.set($event)"
+                        name="username"
+                        [disabled]="isLoading()"
+                        placeholder="z.B. jonas.kummer"
+                        class="w-full pl-11 pr-4 py-3 bg-gray-50 dark:bg-surface-950 text-surface-900 dark:text-surface-0 border border-surface-200 dark:border-surface-800 rounded-xl focus:outline-hidden focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-150 text-sm disabled:opacity-50"
+                    />
+                </div>
+            </div>
+
+            <div>
+                <div class="flex items-center justify-between mb-2">
+                    <label for="password" class="block text-xs font-semibold tracking-wider text-surface-500 dark:text-surface-400 uppercase">
+                        Passwort
+                    </label>
+                    <a href="#" class="text-xs font-medium text-blue-600 hover:underline transition-colors">
+                        Passwort vergessen?
+                    </a>
+                </div>
+                <div class="relative">
+                    <i class="pi pi-lock absolute left-4 top-1/2 -translate-y-1/2 text-surface-400 text-base"></i>
+                    <input 
+                        [type]="showPassword() ? 'text' : 'password'" 
+                        id="password"
+                        [ngModel]="password()" 
+                        (ngModelChange)="password.set($event)"
+                        name="password"
+                        [disabled]="isLoading()"
+                        placeholder="••••••••"
+                        class="w-full pl-11 pr-12 py-3 bg-gray-50 dark:bg-surface-950 text-surface-900 dark:text-surface-0 border border-surface-200 dark:border-surface-800 rounded-xl focus:outline-hidden focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-150 text-sm disabled:opacity-50"
+                    />
+                    <button 
+                        type="button"
+                        (click)="showPassword.set(!showPassword())"
+                        class="absolute right-4 top-1/2 -translate-y-1/2 text-surface-400 hover:text-surface-600 dark:hover:text-surface-200 transition-colors"
+                    >
+                        <i class="pi" [ngClass]="showPassword() ? 'pi-eye-slash' : 'pi-eye'"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="flex items-center">
+                <input 
+                    type="checkbox" 
+                    id="remember" 
+                    class="h-4 w-4 text-blue-600 border-surface-300 dark:border-surface-700 rounded-sm focus:ring-blue-500 bg-gray-50 dark:bg-surface-950"
+                />
+                <label for="remember" class="ml-2 text-sm text-surface-600 dark:text-surface-400 select-none cursor-pointer">
+                    Angemeldet bleiben
+                </label>
+            </div>
+
+            <button 
+                pRipple
+                type="submit" 
+                [disabled]="isLoading()"
+                class="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm rounded-xl shadow-md shadow-blue-500/10 hover:shadow-blue-500/20 transition-all duration-150 flex items-center justify-center gap-2 p-ripple disabled:opacity-75 disabled:cursor-not-allowed"
+            >
+                @if (isLoading()) {
+                    <i class="pi pi-spin pi-spinner text-base"></i>
+                    <span class="animate-pulse">Einen Moment...</span>
+                } @else {
+                    <span>Anmelden</span>
+                    <i class="pi pi-arrow-right text-xs transition-transform group-hover:translate-x-1"></i>
+                }
+            </button>
+
+        </form>
+
+        <div class="mt-6 text-center text-xs text-surface-400 dark:text-surface-500">
+            Solltest du keinen Zugang haben, wende dich bitte an deine Administration.
+        </div>
+
+    </div>
+</div>

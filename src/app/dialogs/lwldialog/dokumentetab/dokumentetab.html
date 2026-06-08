@@ -1,0 +1,102 @@
+                <div class="py-4 space-y-4" @tabFade>
+
+                    <div
+                        class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-neutral-100">
+                        <div>
+                            <h4 class="text-[10px] font-bold text-neutral-400 uppercase tracking-widest">Verfügbare
+                                Unterlagen</h4>
+                            <p class="text-xs text-neutral-500 font-medium">{{ displayedFiles().length }} Dateien
+                                geladen</p>
+                        </div>
+
+                        @if (displayedFiles().length > 0) {
+                        <div class="flex items-center gap-2">
+
+                            <button (click)="toggleSort()" [ngClass]="{
+                                        'bg-blue-50 text-blue-600 border-blue-200 shadow-sm': sortState() !== 'none',
+                                        'bg-white text-neutral-600 border-neutral-200 hover:bg-neutral-50': sortState() === 'none'
+                                    }"
+                                class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold border rounded-xl transition-all cursor-pointer select-none">
+
+                                <i class="pi text-[10px] transition-transform" [ngClass]="{
+                                    'pi-sort-alt': sortState() === 'none',
+                                    'pi-tag': sortState() === 'category',
+                                    'pi-sort-alpha-down': sortState() === 'title',
+                                    'pi-calendar': sortState() === 'date'
+                                    }"></i>
+
+                                <span>
+                                    @if (sortState() === 'none') { Unsortiert }
+                                    @if (sortState() === 'category') { Sortiert nach: Kategorie }
+                                    @if (sortState() === 'title') { Sortiert nach: Name }
+                                    @if (sortState() === 'date') { Sortiert nach: Datum }
+                                </span>
+                            </button>
+
+                            <button (click)="downloadAllFiles()"
+                                class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold bg-neutral-900 hover:bg-neutral-800 text-white border border-transparent rounded-xl transition-all cursor-pointer">
+                                <i class="pi pi-download text-[10px]"></i>
+                                <span>Alle laden</span>
+                            </button>
+
+                        </div>
+                        }
+                    </div>
+
+                    <div
+                        class="divide-y divide-neutral-100 border border-neutral-200 rounded-2xl bg-white overflow-hidden">
+
+                        @for (file of displayedFiles(); track file.id) {
+                        <div class="flex items-center justify-between p-4 hover:bg-neutral-50 transition-colors group">
+
+                            <div class="flex items-center gap-3 min-w-0">
+                                <div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0" [ngClass]="{
+                               'bg-red-50 text-red-600': file.typ === 'pdf',
+                               'bg-blue-50 text-blue-600': file.typ === 'docx' || file.typ === 'doc',
+                               'bg-emerald-50 text-emerald-600': file.typ === 'xlsx'
+                             }">
+                                    <i class="pi text-lg"
+                                        [ngClass]="{'pi-file-pdf': file.typ === 'pdf', 'pi-file-word': file.typ === 'docx', 'pi-file-excel': file.typ === 'xlsx'}"></i>
+                                </div>
+
+                                <div class="min-w-0 space-y-1">
+                                    <div class="flex items-center gap-2 flex-wrap">
+                                        <p
+                                            class="text-sm font-semibold text-neutral-700 truncate group-hover:text-blue-600 transition-colors max-w-[160px]">
+                                            {{ file.name }}
+                                        </p>
+                                        <span
+                                            class="text-[9px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider"
+                                            [ngClass]="{
+                                        'bg-blue-50 text-blue-600 border border-blue-100': file.kategorie === 'Aufgabe',
+                                        'bg-purple-50 text-purple-600 border border-purple-100': file.kategorie === 'Loesung'
+                                      }">
+                                            {{ file.kategorie }}
+                                        </span>
+                                    </div>
+                                    <p class="text-[11px] text-neutral-400 flex items-center gap-1.5">
+                                        <span>{{ file.groesse }}</span>
+                                        <span class="text-neutral-300">•</span>
+                                        <span>{{ file.geaendert | date:'dd.MM.yyyy' }}</span>
+                                        <span class="text-neutral-300">•</span>
+                                        <span class="font-medium text-neutral-500">von {{ file.autor }}</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <a [href]="file.url" target="_blank" download
+                                class="w-8 h-8 rounded-lg flex items-center justify-center border border-neutral-200 text-neutral-500 hover:text-blue-600 hover:border-blue-200 hover:bg-blue-50 transition-all cursor-pointer shrink-0 ml-2">
+                                <i class="pi pi-download text-xs"></i>
+                            </a>
+
+                        </div>
+                        } @empty {
+                        <div class="p-8 text-center text-neutral-400">
+                            <i class="pi pi-folder-open text-2xl mb-2 block text-neutral-300"></i>
+                            <p class="text-xs font-medium">Für diese Lernwegeliste wurden noch keine Dokumente
+                                hinterlegt.</p>
+                        </div>
+                        }
+                    </div>
+
+                </div>

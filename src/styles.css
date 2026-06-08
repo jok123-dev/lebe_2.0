@@ -1,0 +1,51 @@
+@import "tailwindcss";
+@import "primeicons/primeicons.css";
+@custom-variant dark (&:where(.p-dark, .p-dark *));
+
+@theme {
+  /* Weißer Basis-Hintergrund */
+  --color-grid-white: #ffffff;
+
+  /* Das gewünschte, sehr pastellige Hellblau & passender dunkler Text */
+  --color-pastel-blue-bg: #f0f7ff;   /* Super softes, helles Milchblau */
+  --color-pastel-blue-border: #bae6fd;
+  --color-pastel-blue-text: #0369a1; /* Kräftiges Blau für die Lesbarkeit */
+
+  /* Das pastellige Orange & passender dunkler Text */
+  --color-pastel-orange-bg: #fff7ed; /* Super softes Pastell-Orange */
+  --color-pastel-orange-border: #fed7aa;
+  --color-pastel-orange-text: #c2410c; /* Kräftiges Orange für die Lesbarkeit */
+  
+  /* Neutraler Zustand (Offen) */
+  --color-neutral-bg: #f8fafc;
+  --color-neutral-border: #e2e8f0;
+  --color-neutral-text: #475569;
+}
+
+/* regeln für die animation des menüs 
+@keyframes slideDown {
+    from { max-height: 0; opacity: 1; }
+    to { max-height: 300px; opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { max-height: 300px; opacity: 1; }
+    to { max-height: 0; opacity: 1; }
+}
+
+.animate-slidedown {
+    animation: slideDown 1.2s ease-out forwards;
+    overflow: hidden;
+}
+
+.animate-slideup {
+    animation: slideUp .3s ease-in forwards;
+    overflow: hidden;
+}
+
+/*
+.p-overlay-mask-leave-active {
+    pointer-events: none !important;
+    display: none !important; /* Erzwingt das sofortige Verschwinden der overlaymaske der navigation
+}
+*/

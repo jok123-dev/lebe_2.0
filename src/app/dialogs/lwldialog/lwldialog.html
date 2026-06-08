@@ -1,0 +1,36 @@
+<p-drawer [(visible)]="isVisible" position="bottom"
+    [style]="{'height': '65vh', 'display': 'flex', 'flex-direction': 'column' }" [blockScroll]="true"
+    class="custom-bottom-drawer"
+    styleClass="w-full md:!max-w-[550px] md:!left-0 md:!right-0 md:!mx-auto rounded-t-3xl border-t border-neutral-200 shadow-2xl lwl-responsive-drawer">
+
+    <ng-template pTemplate="header">
+        @if(data()){
+        <div class="flex flex-col">
+            <span class="text-[10px] font-bold uppercase tracking-widest text-neutral-400">Lernwegeliste</span>
+            <h3 class="text-lg font-bold text-neutral-900">{{ data().text }}</h3>
+        </div>
+        }
+    </ng-template>
+
+    <p-tabs [(value)]="activeTab">
+        <p-tablist>
+            <p-tab value="0" class="text-sm"><i class="pi pi-check-circle" style="font-size: small;"></i> Status</p-tab>
+            <p-tab value="1" class="text-sm"><i class="pi pi-folder-open" style="font-size: small;"></i>
+                Dokumente</p-tab>
+            <p-tab value="2" class="text-sm"><i class="pi pi-upload" style="font-size: small;"></i> Upload</p-tab>
+        </p-tablist>
+        <p-tabpanels>
+            <p-tabpanel value="0">
+                <app-statustab (onSaved)="onSaved.emit($event)"></app-statustab>
+            </p-tabpanel>
+            <p-tabpanel value="1">
+                <app-dokumentetab></app-dokumentetab>
+            </p-tabpanel>
+            <p-tabpanel value="2">
+                <app-uploadtab></app-uploadtab>
+            </p-tabpanel>
+        </p-tabpanels>
+    </p-tabs>
+
+
+</p-drawer>

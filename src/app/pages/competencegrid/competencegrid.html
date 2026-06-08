@@ -1,0 +1,389 @@
+<div class="self-start sm:self-center mt-4.5 cursor-pointer">
+  <a routerLink="/selectCompetencegrid"
+    class="group inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold text-blue-600 dark:text-blue-400 bg-neutral-100 dark:bg-surface-900 border border-neutral-200/60 dark:border-surface-800 rounded-xl transition-all duration-200 hover:bg-neutral-200/70 dark:hover:bg-surface-800 hover:text-blue-700 dark:hover:text-blue-300 hover:shadow-xs">
+
+    <i class="pi pi-angle-double-left transition-transform duration-200 group-hover:-translate-x-0.5 mr-0.5"></i>
+
+    <span>Zurück zur Übersicht</span>
+  </a>
+</div>
+@if(isLoading()){
+<div class="w-full">
+
+  <div
+    class="bg-white mt-4.5 dark:bg-surface-900 border border-neutral-200/60 dark:border-surface-800 rounded-2xl p-5 mb-6 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+    <div class="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8 flex-1">
+      <div class="min-w-0 flex-1">
+        <p-skeleton width="6rem" height="0.75rem" styleClass="mb-2"></p-skeleton>
+        <p-skeleton width="75%" height="1.5rem" borderRadius="8px"></p-skeleton>
+      </div>
+      <div class="sm:border-l sm:border-neutral-200 dark:sm:border-surface-800 sm:pl-8 shrink-0">
+        <p-skeleton width="3rem" height="0.75rem" styleClass="mb-2"></p-skeleton>
+        <p-skeleton width="4rem" height="1.25rem" borderRadius="8px"></p-skeleton>
+      </div>
+      <div class="sm:border-l sm:border-neutral-200 dark:sm:border-surface-800 sm:pl-8 shrink-0">
+        <p-skeleton width="4rem" height="0.75rem" styleClass="mb-2"></p-skeleton>
+        <p-skeleton width="3rem" height="1.25rem" borderRadius="8px"></p-skeleton>
+      </div>
+    </div>
+    <div class="lg:justify-end">
+      <p-skeleton width="12rem" height="2.25rem" borderRadius="12px"></p-skeleton>
+    </div>
+  </div>
+
+  <div class="w-full bg-white rounded-2xl border border-neutral-200 shadow-sm overflow-x-auto block whitespace-nowrap">
+    <table class="w-full text-left border-collapse table-fixed min-w-[1100px]">
+
+      <thead>
+        <tr class="bg-neutral-50/75 border-b border-neutral-200">
+          <th class="p-4 w-64 bg-neutral-50/50">
+            <p-skeleton width="7rem" height="1rem"></p-skeleton>
+          </th>
+          @for (i of [1, 2, 3]; track i) {
+          <th class="p-4 min-w-[120px]">
+            <p-skeleton width="5rem" height="1rem"></p-skeleton>
+          </th>
+          }
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (row of [1, 2, 3, 4]; track row) {
+        <tr class="border-b border-neutral-100 last:border-0 ">
+
+          <td class="p-4 align-top bg-neutral-50/20 border-r border-neutral-100 w-64 whitespace-normal">
+            <p-skeleton width="10rem" height="1.25rem" styleClass="mb-2" borderRadius="6px"></p-skeleton>
+            <p-skeleton width="6rem" height="0.75rem" borderRadius="4px"></p-skeleton>
+          </td>
+
+          @for (col of [1, 2, 3]; track col) {
+          <td class="p-4 align-top whitespace-normal">
+            <div class="flex flex-col h-full min-h-[160px] rounded-xl border border-neutral-200 bg-white p-4">
+
+              <div class="space-y-2 mb-4 flex-1">
+                <p-skeleton width="100%" height="0.75rem"></p-skeleton>
+                <p-skeleton width="85%" height="0.75rem"></p-skeleton>
+                <p-skeleton width="65%" height="0.75rem"></p-skeleton>
+              </div>
+
+              <div class="space-y-2 mt-auto">
+                <div class="flex flex-col p-2 bg-neutral-50 border border-neutral-100 rounded-lg">
+                  <div class="flex justify-between items-center w-full">
+                    <p-skeleton width="8rem" height="0.75rem"></p-skeleton>
+                    <p-skeleton shape="circle" size="0.5rem"></p-skeleton>
+                  </div>
+                  <p-skeleton width="3rem" height="2px" styleClass="mt-2.5"></p-skeleton>
+                </div>
+
+                <div class="flex flex-col p-2 bg-neutral-50 border border-neutral-100 rounded-lg">
+                  <div class="flex justify-between items-center w-full">
+                    <p-skeleton width="6rem" height="0.75rem"></p-skeleton>
+                    <p-skeleton shape="circle" size="0.5rem"></p-skeleton>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </td>
+          }
+
+        </tr>
+        }
+      </tbody>
+
+    </table>
+  </div>
+</div>
+}@else{
+<div
+  class="bg-white mt-4.5 dark:bg-surface-900 border border-neutral-200/60 dark:border-surface-800 rounded-2xl p-5 shadow-xs mb-6 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+
+  <div class="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8 flex-1">
+
+    <div class="min-w-0">
+      <span class="text-[10px] font-bold uppercase tracking-wider text-neutral-400 dark:text-neutral-500">
+        Kompetenzraster für
+      </span>
+      <h1 class="text-xl font-bold text-neutral-800 dark:text-neutral-100 truncate mt-0.5">
+        {{ competencegrid()?.title }}
+      </h1>
+    </div>
+
+    <div class="sm:border-l sm:border-neutral-200 dark:sm:border-surface-800 sm:pl-8 shrink-0">
+      <span class="text-[10px] font-bold uppercase tracking-wider text-neutral-400 dark:text-neutral-500">
+        Klasse
+      </span>
+      <p class="text-lg font-bold text-neutral-700 dark:text-neutral-200 mt-0.5">
+        {{ competencegrid()?.class }}
+      </p>
+    </div>
+
+    <div class="sm:border-l sm:border-neutral-200 dark:sm:border-surface-800 sm:pl-8 shrink-0">
+      <span class="text-[10px] font-bold uppercase tracking-wider text-neutral-400 dark:text-neutral-500">
+        Erledigt
+      </span>
+      <p class="text-lg font-bold text-blue-600 dark:text-blue-400 mt-0.5">
+        {{calcAbgeschlossenPercentage()}}%
+      </p>
+    </div>
+  </div>
+
+  <div class="flex flex-wrap items-center gap-4 lg:justify-end">
+
+    <div
+      class="bg-neutral-50/80 dark:bg-surface-950/40 border border-neutral-200/50 dark:border-surface-800/60 px-4 py-2.5 rounded-xl flex flex-wrap items-center gap-x-4 gap-y-2 text-xs font-semibold text-neutral-600 dark:text-neutral-400">
+      <span class="text-[10px] font-bold uppercase tracking-wider text-neutral-400 mr-1">
+        Legende:
+      </span>
+
+      <div class="flex items-center gap-1.5">
+        <span class="h-2 w-2 rounded-full bg-green-500 shadow-xs shadow-green-500/50"></span>
+        <span>Erledigt</span>
+      </div>
+
+      <div class="flex items-center gap-1.5">
+        <span class="h-2 w-2 rounded-full bg-orange-500 shadow-xs shadow-orange-500/50"></span>
+        <span>In Bearbeitung</span>
+      </div>
+
+      <div class="flex items-center gap-1.5">
+        <span class="h-2 w-2 rounded-full bg-neutral-300 dark:bg-neutral-600"></span>
+        <span>Offen</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="w-full space-y-4">
+
+  <div class="flex flex-wrap items-center justify-between gap-3 bg-neutral-50 p-4 rounded-xl border border-neutral-200">
+
+    <div class="flex items-center gap-2 bg-neutral-200/60 p-1 rounded-lg text-xs font-medium">
+      <button (click)="viewMode.set('auto')"
+        [ngClass]="viewMode() === 'auto' ? 'bg-white text-neutral-900 shadow-xs' : 'text-neutral-500 hover:text-neutral-900'"
+        class="px-3 py-1.5 rounded-md transition-all">
+        🔄 Auto
+      </button>
+      <button (click)="viewMode.set('table')"
+        [ngClass]="viewMode() === 'table' ? 'bg-white text-neutral-900 shadow-xs' : 'text-neutral-500 hover:text-neutral-900'"
+        class="px-3 py-1.5 rounded-md transition-all">
+        📊 Tabelle
+      </button>
+      <button (click)="viewMode.set('list')"
+        [ngClass]="viewMode() === 'list' ? 'bg-white text-neutral-900 shadow-xs' : 'text-neutral-500 hover:text-neutral-900'"
+        class="px-3 py-1.5 rounded-md transition-all">
+        📱 Liste
+      </button>
+    </div>
+
+    <button (click)="scrollToLastEdited()"
+      class="flex items-center gap-2 bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-xl text-xs font-semibold shadow-xs transition-colors">
+      <span>📍 Weiterarbeiten (Letzter Stand)</span>
+    </button>
+  </div>
+
+  <div [ngClass]="{
+         'hidden md:block': viewMode() === 'auto',
+         'block': viewMode() === 'table',
+         'hidden': viewMode() === 'list'
+       }" class="bg-white rounded-2xl border border-neutral-200 shadow-sm overflow-x-auto">
+
+    <div class="w-full bg-white rounded-2xl border border-neutral-200 shadow-sm overflow-x-auto">
+
+      <p-table [value]="themen()" styleClass="w-full"
+        tableStyleClass="min-w-full w-max table-fixed text-left border-collapse">
+
+        <ng-template pTemplate="header">
+          <tr class="bg-neutral-50/75 border-b border-neutral-200 backdrop-blur-xs">
+
+            <th class="p-4 text-xs font-semibold text-neutral-500 uppercase tracking-wider w-[240px] bg-neutral-50/50">
+              Thema / Bereich
+            </th>
+
+            @for (level of niveaus(); track level) {
+            <th class="p-4 text-xs font-semibold text-neutral-500 uppercase tracking-wider w-[230px]">
+              Level {{ level }}
+            </th>
+            }
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-thema>
+          <tr class="border-b border-neutral-100 last:border-0 hover:bg-neutral-50/30 transition-colors">
+
+            <td
+              class="p-4 align-top font-bold text-neutral-950 bg-neutral-50/20 border-r border-neutral-100 whitespace-normal break-words">
+              <div class="sticky">
+                {{ thema.name }}
+              </div>
+            </td>
+
+            @for (level of niveaus(); track level) {
+            <td class="p-2 align-top">
+
+              @if (getLernfeld(thema.id, level); as lf) {
+              <div
+                class="group flex flex-col h-full rounded-xl border border-neutral-200 bg-white p-3 transition-all duration-200 hover:border-neutral-300 hover:shadow-xs">
+
+                <p class="text-xs font-medium text-neutral-800 leading-relaxed mb-2.5 whitespace-normal break-words">
+                  {{ lf.beschreibung }}
+                </p>
+
+                <div class="mt-auto flex flex-col gap-1.5">
+                  @for (item of getLWL(lf.lernfeldId); track item.id) {
+                  <div [ngClass]="{
+                   'bg-green-50/60 border-green-200 text-green-600': userStatus()[item.id] === 'erledigt',
+                   'bg-orange-50/60 border-orange-200 text-orange-700': userStatus()[item.id] === 'in_arbeit',
+                   'bg-neutral-50 border-neutral-200 text-neutral-600 hover:bg-neutral-100/80': userStatus()[item.id] === 'offen' || !userStatus()[item.id]
+                 }" class="flex flex-col p-2 text-[11px] font-medium rounded-lg border transition-all duration-150 cursor-pointer"
+                    (click)="handleLwlClick(item)">
+
+                    <div class="flex items-center justify-between w-full gap-1">
+                      <span class="truncate flex-1" [title]="item.text">{{ item.text }}</span>
+
+                      <span class="flex h-1.5 w-1.5 shrink-0 rounded-full" [ngClass]="{
+                        'bg-green-500 shadow-xs shadow-green-500/50': userStatus()[item.id] === 'erledigt',
+                        'bg-orange-500 shadow-xs shadow-orange-500/50': userStatus()[item.id] === 'in_arbeit',
+                        'bg-neutral-300': userStatus()[item.id] === 'offen' || !userStatus()[item.id]
+                      }">
+                      </span>
+                    </div>
+
+                    @if (lwlProgressMap()[item.id]?.erledigt; as prozent) {
+                    <div class="mt-2 w-full bg-neutral-200/60 dark:bg-surface-800 h-[2px] rounded-full overflow-hidden"
+                      title="So viel Prozent der Klasse sind fertig">
+                      <div class="bg-slate-400 dark:bg-slate-500 h-full transition-all duration-300"
+                        [style.width.%]="prozent">
+                      </div>
+                    </div>
+                    }
+
+                  </div>
+                  }
+                </div>
+
+              </div>
+              } @else {
+              <div
+                class="flex h-full min-h-[80px] items-center justify-center rounded-xl border border-dashed border-neutral-200 bg-neutral-25/30 p-3 text-[11px] italic text-neutral-400 select-none text-center">
+                Kein Lernfeld
+              </div>
+              }
+
+            </td>
+            }
+          </tr>
+        </ng-template>
+
+      </p-table>
+    </div>
+  </div>
+
+  <div [ngClass]="{
+       'block md:hidden': viewMode() === 'auto',
+       'hidden': viewMode() === 'table',
+       'block': viewMode() === 'list'
+     }" class="space-y-2">
+
+    <p-accordion [value]="activeThemaIndex()">
+      @for (thema of themen(); track thema.id; let tIdx = $index) {
+
+      <p-accordion-panel [value]="tIdx">
+
+        <p-accordion-header>
+          <div class="flex flex-col w-full pr-4 gap-1">
+            <div class="flex items-center justify-between w-full">
+              <span class="font-bold text-neutral-900 text-sm">{{ thema.name }}</span>
+              <span class="text-xs bg-neutral-100 px-2 py-0.5 rounded-full font-medium text-neutral-600">
+                {{ getThemaProgress(thema.id).done }} / {{ getThemaProgress(thema.id).total }} Erledigt
+              </span>
+            </div>
+            <div class="w-full bg-neutral-100 h-1.5 rounded-full overflow-hidden">
+              <div class="bg-green-500 h-full transition-all duration-300"
+                [style.width.%]="getThemaProgress(thema.id).percent"></div>
+            </div>
+          </div>
+        </p-accordion-header>
+
+        <p-accordion-content>
+
+          <p-accordion [value]="activeLernfeldIndex()">
+            @for (level of niveaus(); track level; let lfIdx = $index) {
+            @if (getLernfeld(thema.id, level); as lf) {
+
+            <p-accordion-panel [value]="lfIdx">
+
+              <p-accordion-header>
+                <div class="flex items-center justify-between w-full pr-4 text-xs">
+                  <div class="flex flex-col text-left">
+                    <span class="font-semibold text-neutral-700">Level {{ level }}</span>
+                    <span class="text-neutral-500 font-normal wrap-break-word max-w-[400px]">{{ lf.beschreibung }}</span>
+                  </div>
+                  <div class="flex gap-1">
+                    <span class="h-2 w-2 rounded-full bg-green-500"></span>
+                    <span class="h-2 w-2 rounded-full bg-orange-500"></span>
+                  </div>
+                </div>
+              </p-accordion-header>
+
+              <p-accordion-content>
+                <div class="space-y-2 pt-2">
+                  @for (item of getLWL(lf.lernfeldId); track item.id) {
+                  <div [id]="userStatus()[item.id] === 'letzter_stand' ? 'last-edited-lwl' : 'lwl-' + item.id"
+                    [ngClass]="{
+           'bg-green-50 border-green-200 text-green-800': userStatus()[item.id] === 'erledigt',
+           'bg-orange-50 border-orange-200 text-orange-900': userStatus()[item.id] === 'in_arbeit',
+           'bg-neutral-50 border-neutral-200 text-neutral-800': !userStatus()[item.id] || userStatus()[item.id] === 'offen'
+         }" class="flex items-start justify-between p-3 rounded-xl border text-xs font-medium cursor-pointer active:scale-[0.99] transition-all"
+                    (click)="$event.stopPropagation(); handleLwlClick(item)">
+
+                    <div class="flex flex-col gap-1 flex-1 pr-3 text-left">
+                      <span class="leading-relaxed">{{ item.text }}</span>
+
+                     
+                      <span class="text-[10px] text-neutral-400 font-normal">{{ lwlProgressMap()[item.id]?.erledigt ?? 0 }}% der Klasse fertig</span>
+                     
+                    </div>
+
+                    <span class="text-[10px] uppercase tracking-wider font-bold px-2 py-1 rounded-md shrink-0"
+                      [ngClass]="{
+              'bg-green-200 text-green-800': userStatus()[item.id] === 'erledigt',
+              'bg-orange-200 text-orange-800': userStatus()[item.id] === 'in_arbeit',
+              'bg-neutral-200 text-neutral-600': !userStatus()[item.id] || userStatus()[item.id] === 'offen'
+            }">
+                      @if (userStatus()[item.id] === 'in_arbeit') { In Arbeit }
+                      @else if (userStatus()[item.id] === 'erledigt') { Erledigt }
+                      @else { Offen }
+                    </span>
+                  </div>
+                  }
+                </div>
+              </p-accordion-content>
+
+            </p-accordion-panel>
+
+            }
+            }
+          </p-accordion>
+
+        </p-accordion-content>
+
+      </p-accordion-panel>
+      }
+    </p-accordion>
+
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+}
+<app-lwldialog #detailDrawer (onSaved)="handleStatusChange($event)">
+</app-lwldialog>
