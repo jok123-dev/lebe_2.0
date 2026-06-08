@@ -33,8 +33,8 @@ export class Competencegrid implements OnInit {
   protected isLoading = signal(true);
 
   viewMode = signal<'auto' | 'table' | 'list'>('auto'); //umschalten zwischen tabellen und listenansicht
-  activeThemaIndex = signal<number | null>(null);
-  activeLernfeldIndex = signal<number | null>(null);
+  activeThemaIndex = signal<string | number | number[] | string[] | null | undefined>(null);
+  activeLernfeldIndex = signal<string | number | number[] | string[] | null | undefined>(null);
 
   ngOnInit() {
     // 1. Hole die aktuelle User-ID (z.B. '1')
@@ -174,28 +174,69 @@ export class Competencegrid implements OnInit {
 
   // stuert button zum in der liste zu lwl zu springen
   scrollToLastEdited() {
-  // 1. Hier würdest du die ID aus deiner DB holen. 
-  // 2. Dann ermittelst du, zu welchem Thema und Lernfeld diese ID gehört.
-  // 3. Setze die Indizes (Beispiel: Thema Index 0, Lernfeld Index 1):
+  this.viewMode.set('list');
   
-  this.viewMode.set('list'); // Zwinge in Listenansicht, falls am PC
-  this.activeThemaIndex.set(0); 
-  this.activeLernfeldIndex.set(1);
-
-  // Optional: Scrolle sanft zum Element nach einem kurzen Timeout
+  // 1. Erzwinge einen harten Reset der Indizes (schließt alles, falls noch Reste offen waren)
+  this.activeThemaIndex.set(undefined);
+  this.activeLernfeldIndex.set(undefined);
+  
+  // 2. Erster kleiner Timeout: Warte, bis Angular den Reset im DOM verarbeitet hat
   setTimeout(() => {
-    document.getElementById('last-edited-lwl')?.scrollIntoView({ behavior: 'smooth' });
-  }, 100);
+    // Hier die Indizes setzen, die du ansteuern willst (z.B. Index 0 und Index 0)
+    this.activeThemaIndex.set(0); 
+    this.activeLernfeldIndex.set(7-1);
+
+    // 3. Zweiter Timeout: Warte, bis die PrimeNG-Aufklapp-Animation läuft, 
+    // damit die Höhe des Elements im Browser bekannt ist
+    setTimeout(() => {
+      // Nutze die ID der Kachel. Erinnere dich: Im HTML steht id="lwl-{{item.id}}" 
+      // oder dein 'last-edited-lwl'
+      const element = document.getElementById('last-edited-lwl'); 
+      console.log(element)
+      
+      if (element) {
+        element.scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'center' // Scrollt so, dass das Element genau in der Mitte des Bildschirms landet
+        });
+      }
+    }, 200); // 200ms gibt der Animation genug Zeit
+  }, 50);
 }
 
-getThemaProgress(themaId: string) {
-  // Simulierter Zähler – hier filterst du deine echten LWL-Daten dieses Themas
-  const total = 10; 
-  const done = 4;
-  return {
-    total,
-    done,
-    percent: (done / total) * 100
-  };
-}
+  getThemaProgress(themaId: string) {
+    let total = 0;
+    let done = 0;
+
+    // Wir gehen alle Levels durch und holen die LWLs für dieses eine Thema
+    this.niveaus().forEach(level => {
+      const lf = this.getLernfeld(themaId, level);
+      if (lf) {
+        const lwls = this.getLWL(lf.lernfeldId) || [];
+        total += lwls.length;
+        done += lwls.filter(item => this.userStatus()[item.id] === 'erledigt').length;
+      }
+    });
+
+    return {
+      total,
+      done,
+      percent: total > 0 ? Math.round((done / total) * 100) : 0
+    };
+  }
+
+  // Prüft, ob im aktuellen Level LWLs mit einem bestimmten Status existieren
+  hasLwlStatusInLernfeld(lernfeldId: string, status: 'erledigt' | 'in_arbeit'): boolean {
+    const lwls = this.getLWL(lernfeldId) || [];
+    return lwls.some(item => this.userStatus()[item.id] === status);
+  }
+
+  countOpenLwls(lernfeldId: string): number {
+    const lwls = this.getLWL(lernfeldId) || [];
+    return lwls.filter(item => {
+      const status = this.userStatus()[item.id];
+      return status === 'offen' || !status; // 'offen' oder noch gar nicht angefasst
+    }).length;
+  }
+
 }

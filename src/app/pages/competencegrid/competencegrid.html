@@ -96,92 +96,52 @@
 </div>
 }@else{
 <div
-  class="bg-white mt-4.5 dark:bg-surface-900 border border-neutral-200/60 dark:border-surface-800 rounded-2xl p-5 shadow-xs mb-6 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+  class="bg-white dark:bg-surface-900 border mt-5 border-neutral-200/60 dark:border-surface-800 rounded-2xl p-5 shadow-xs mb-6 flex flex-col gap-6">
 
-  <div class="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8 flex-1">
-
-    <div class="min-w-0">
-      <span class="text-[10px] font-bold uppercase tracking-wider text-neutral-400 dark:text-neutral-500">
-        Kompetenzraster für
-      </span>
-      <h1 class="text-xl font-bold text-neutral-800 dark:text-neutral-100 truncate mt-0.5">
-        {{ competencegrid()?.title }}
-      </h1>
+  <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+    <div class="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8 flex-1">
+      <div class="min-w-0">
+        <span class="text-[10px] font-bold uppercase tracking-wider text-neutral-400">Kompetenzraster für</span>
+        <h1 class="text-xl font-bold text-neutral-800 truncate mt-0.5">{{ competencegrid()?.title }}</h1>
+      </div>
+      <div class="sm:border-l sm:border-neutral-200 sm:pl-8 shrink-0">
+        <span class="text-[10px] font-bold uppercase tracking-wider text-neutral-400">Klasse</span>
+        <p class="text-lg font-bold text-neutral-700 mt-0.5">{{ competencegrid()?.class }}</p>
+      </div>
+      <div class="sm:border-l sm:border-neutral-200 sm:pl-8 shrink-0">
+        <span class="text-[10px] font-bold uppercase tracking-wider text-neutral-400">Erledigt</span>
+        <p class="text-lg font-bold text-blue-600 mt-0.5">{{calcAbgeschlossenPercentage()}}%</p>
+      </div>
     </div>
-
-    <div class="sm:border-l sm:border-neutral-200 dark:sm:border-surface-800 sm:pl-8 shrink-0">
-      <span class="text-[10px] font-bold uppercase tracking-wider text-neutral-400 dark:text-neutral-500">
-        Klasse
-      </span>
-      <p class="text-lg font-bold text-neutral-700 dark:text-neutral-200 mt-0.5">
-        {{ competencegrid()?.class }}
-      </p>
-    </div>
-
-    <div class="sm:border-l sm:border-neutral-200 dark:sm:border-surface-800 sm:pl-8 shrink-0">
-      <span class="text-[10px] font-bold uppercase tracking-wider text-neutral-400 dark:text-neutral-500">
-        Erledigt
-      </span>
-      <p class="text-lg font-bold text-blue-600 dark:text-blue-400 mt-0.5">
-        {{calcAbgeschlossenPercentage()}}%
-      </p>
+    <div class="flex flex-wrap items-center gap-4 lg:justify-end text-xs font-semibold text-neutral-600">
+      <span class="text-[10px] font-bold uppercase tracking-wider text-neutral-400 mr-1">Legende:</span>
+      <div class="flex items-center gap-1.5"><span class="h-2 w-2 rounded-full bg-green-500"></span>Erledigt</div>
+      <div class="flex items-center gap-1.5"><span class="h-2 w-2 rounded-full bg-orange-500"></span>In Bearbeitung
+      </div>
+      <div class="flex items-center gap-1.5"><span class="h-2 w-2 rounded-full bg-neutral-300"></span>Offen</div>
     </div>
   </div>
 
-  <div class="flex flex-wrap items-center gap-4 lg:justify-end">
-
-    <div
-      class="bg-neutral-50/80 dark:bg-surface-950/40 border border-neutral-200/50 dark:border-surface-800/60 px-4 py-2.5 rounded-xl flex flex-wrap items-center gap-x-4 gap-y-2 text-xs font-semibold text-neutral-600 dark:text-neutral-400">
-      <span class="text-[10px] font-bold uppercase tracking-wider text-neutral-400 mr-1">
-        Legende:
-      </span>
-
-      <div class="flex items-center gap-1.5">
-        <span class="h-2 w-2 rounded-full bg-green-500 shadow-xs shadow-green-500/50"></span>
-        <span>Erledigt</span>
-      </div>
-
-      <div class="flex items-center gap-1.5">
-        <span class="h-2 w-2 rounded-full bg-orange-500 shadow-xs shadow-orange-500/50"></span>
-        <span>In Bearbeitung</span>
-      </div>
-
-      <div class="flex items-center gap-1.5">
-        <span class="h-2 w-2 rounded-full bg-neutral-300 dark:bg-neutral-600"></span>
-        <span>Offen</span>
-      </div>
+  <div class="flex flex-wrap items-center gap-3 border-t border-neutral-100 pt-5">
+    <div class="flex items-center gap-2 bg-neutral-100 p-1 rounded-lg text-xs font-medium ">
+      <button (click)="viewMode.set('auto')" [ngClass]="{'bg-white shadow-xs': viewMode() === 'auto'}"
+        class="px-3 py-1.5 rounded-md transition-all cursor-pointer"><i class="pi pi-star"
+          style="font-size: smaller;"></i> Auto</button>
+      <button (click)="viewMode.set('table')" [ngClass]="{'bg-white shadow-xs': viewMode() === 'table'}"
+        class="px-3 py-1.5 rounded-md transition-all cursor-pointer"><i class="pi pi-th-large"
+          style="font-size: smaller;"></i> Tabelle</button>
+      <button (click)="viewMode.set('list')" [ngClass]="{'bg-white shadow-xs': viewMode() === 'list'}"
+        class="px-3 py-1.5 rounded-md transition-all cursor-pointer"><i class="pi pi-bars"
+          style="font-size: smaller;"></i> Liste</button>
     </div>
-
-  </div>
-</div>
-
-<div class="w-full space-y-4">
-
-  <div class="flex flex-wrap items-center justify-between gap-3 bg-neutral-50 p-4 rounded-xl border border-neutral-200">
-
-    <div class="flex items-center gap-2 bg-neutral-200/60 p-1 rounded-lg text-xs font-medium">
-      <button (click)="viewMode.set('auto')"
-        [ngClass]="viewMode() === 'auto' ? 'bg-white text-neutral-900 shadow-xs' : 'text-neutral-500 hover:text-neutral-900'"
-        class="px-3 py-1.5 rounded-md transition-all">
-        🔄 Auto
-      </button>
-      <button (click)="viewMode.set('table')"
-        [ngClass]="viewMode() === 'table' ? 'bg-white text-neutral-900 shadow-xs' : 'text-neutral-500 hover:text-neutral-900'"
-        class="px-3 py-1.5 rounded-md transition-all">
-        📊 Tabelle
-      </button>
-      <button (click)="viewMode.set('list')"
-        [ngClass]="viewMode() === 'list' ? 'bg-white text-neutral-900 shadow-xs' : 'text-neutral-500 hover:text-neutral-900'"
-        class="px-3 py-1.5 rounded-md transition-all">
-        📱 Liste
+    <div class="flex items-center gap-2 bg-blue-200 p-1 rounded-lg text-xs font-medium">
+      <button (click)="scrollToLastEdited()"
+        class="flex bg-white shadow-xs items-center bg-primary-600 font-medium px-3 py-1.5 rounded-lg text-xs hover:bg-primary-700 transition-colors cursor-pointer">
+        Weiterarbeiten an zuletzt ausgewählter LWL
       </button>
     </div>
-
-    <button (click)="scrollToLastEdited()"
-      class="flex items-center gap-2 bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-xl text-xs font-semibold shadow-xs transition-colors">
-      <span>📍 Weiterarbeiten (Letzter Stand)</span>
-    </button>
   </div>
+
 
   <div [ngClass]="{
          'hidden md:block': viewMode() === 'auto',
@@ -286,29 +246,34 @@
        'block': viewMode() === 'list'
      }" class="space-y-2">
 
-    <p-accordion [value]="activeThemaIndex()">
+    <p-accordion [value]="activeThemaIndex()" (valueChange)="activeThemaIndex.set($event)">
       @for (thema of themen(); track thema.id; let tIdx = $index) {
 
       <p-accordion-panel [value]="tIdx">
 
         <p-accordion-header>
-          <div class="flex flex-col w-full pr-4 gap-1">
+          <div class="flex flex-col w-full pr-4 gap-1.5">
             <div class="flex items-center justify-between w-full">
-              <span class="font-bold text-neutral-900 text-sm">{{ thema.name }}</span>
-              <span class="text-xs bg-neutral-100 px-2 py-0.5 rounded-full font-medium text-neutral-600">
+              <span class="font-bold text-neutral-900 text-sm text-left whitespace-normal leading-snug">
+                {{ thema.name }}
+              </span>
+
+              <span class="text-xs bg-neutral-100 px-2 py-0.5 rounded-full font-medium text-neutral-600 shrink-0">
                 {{ getThemaProgress(thema.id).done }} / {{ getThemaProgress(thema.id).total }} Erledigt
               </span>
             </div>
-            <div class="w-full bg-neutral-100 h-1.5 rounded-full overflow-hidden">
+
+            <div class="w-full bg-neutral-200/60 h-1.5 rounded-full overflow-hidden">
               <div class="bg-green-500 h-full transition-all duration-300"
-                [style.width.%]="getThemaProgress(thema.id).percent"></div>
+                [style.width.%]="getThemaProgress(thema.id).percent">
+              </div>
             </div>
           </div>
         </p-accordion-header>
 
         <p-accordion-content>
 
-          <p-accordion [value]="activeLernfeldIndex()">
+          <p-accordion [value]="activeLernfeldIndex()" (valueChange)="activeLernfeldIndex.set($event)">
             @for (level of niveaus(); track level; let lfIdx = $index) {
             @if (getLernfeld(thema.id, level); as lf) {
 
@@ -316,46 +281,70 @@
 
               <p-accordion-header>
                 <div class="flex items-center justify-between w-full pr-4 text-xs">
-                  <div class="flex flex-col text-left">
+                  <div class="flex flex-col text-left gap-0.5">
                     <span class="font-semibold text-neutral-700">Level {{ level }}</span>
-                    <span class="text-neutral-500 font-normal wrap-break-word max-w-[400px]">{{ lf.beschreibung }}</span>
+                    <span class="text-neutral-500 font-normal wrap-break-word max-w-[240px] sm:max-w-[600px]">
+                      {{ lf.beschreibung }}
+                    </span>
                   </div>
-                  <div class="flex gap-1">
-                    <span class="h-2 w-2 rounded-full bg-green-500"></span>
-                    <span class="h-2 w-2 rounded-full bg-orange-500"></span>
+
+                  <div class="flex gap-2 items-center shrink-0">
+
+                    @if (hasLwlStatusInLernfeld(lf.lernfeldId, 'in_arbeit')) {
+                    <span
+                      class="flex items-center gap-1 bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full font-bold animate-pulse text-[10px]">
+                      <span class="h-1.5 w-1.5 rounded-full bg-orange-500"></span>
+                      Weiter
+                    </span>
+                    }
+
+                    @if (countOpenLwls(lf.lernfeldId) > 0) {
+                    <span class="bg-neutral-100 text-neutral-600 px-2 py-0.5 rounded-full font-medium text-[10px]"
+                      title="Offene Aufgaben">
+                      {{ countOpenLwls(lf.lernfeldId) }} offen
+                    </span>
+                    }
+
+                    @if (hasLwlStatusInLernfeld(lf.lernfeldId, 'erledigt')) {
+                    <span class="h-2 w-2 rounded-full bg-green-500 shadow-xs shadow-green-500/50"
+                      title="Erledigte Aufgaben vorhanden"></span>
+                    }
                   </div>
                 </div>
               </p-accordion-header>
 
               <p-accordion-content>
-                <div class="space-y-2 pt-2">
+                <div class="space-y-2 pt-1">
                   @for (item of getLWL(lf.lernfeldId); track item.id) {
-                  <div [id]="userStatus()[item.id] === 'letzter_stand' ? 'last-edited-lwl' : 'lwl-' + item.id"
-                    [ngClass]="{
-           'bg-green-50 border-green-200 text-green-800': userStatus()[item.id] === 'erledigt',
-           'bg-orange-50 border-orange-200 text-orange-900': userStatus()[item.id] === 'in_arbeit',
-           'bg-neutral-50 border-neutral-200 text-neutral-800': !userStatus()[item.id] || userStatus()[item.id] === 'offen'
-         }" class="flex items-start justify-between p-3 rounded-xl border text-xs font-medium cursor-pointer active:scale-[0.99] transition-all"
+
+                  <div [id]="'lwl-' + item.id" [ngClass]="{
+                               'bg-green-50/75 border-green-200 text-green-800': userStatus()[item.id] === 'erledigt',
+                               'bg-orange-50/75 border-orange-200 text-orange-900': userStatus()[item.id] === 'in_arbeit',
+                               'bg-neutral-50 border-neutral-200 text-neutral-800': !userStatus()[item.id] || userStatus()[item.id] === 'offen'
+                             }"
+                    class="flex items-start justify-between p-3 rounded-xl border text-xs font-medium cursor-pointer active:scale-[0.99] transition-all"
                     (click)="$event.stopPropagation(); handleLwlClick(item)">
 
                     <div class="flex flex-col gap-1 flex-1 pr-3 text-left">
-                      <span class="leading-relaxed">{{ item.text }}</span>
+                      <span class="leading-relaxed whitespace-normal break-words">{{ item.text }}</span>
 
-                     
-                      <span class="text-[10px] text-neutral-400 font-normal">{{ lwlProgressMap()[item.id]?.erledigt ?? 0 }}% der Klasse fertig</span>
-                     
+                      <span class="text-[10px] text-neutral-400 font-normal select-none">
+                        {{ lwlProgressMap()[item.id]?.erledigt ?? 0 }}% der Klasse fertig
+                      </span>
                     </div>
 
-                    <span class="text-[10px] uppercase tracking-wider font-bold px-2 py-1 rounded-md shrink-0"
+                    <span
+                      class="text-[10px] uppercase tracking-wider font-bold px-2 py-1 rounded-md shrink-0 select-none"
                       [ngClass]="{
-              'bg-green-200 text-green-800': userStatus()[item.id] === 'erledigt',
-              'bg-orange-200 text-orange-800': userStatus()[item.id] === 'in_arbeit',
-              'bg-neutral-200 text-neutral-600': !userStatus()[item.id] || userStatus()[item.id] === 'offen'
-            }">
+                                  'bg-green-200 text-green-800': userStatus()[item.id] === 'erledigt',
+                                  'bg-orange-200 text-orange-800': userStatus()[item.id] === 'in_arbeit',
+                                  'bg-neutral-200 text-neutral-600': !userStatus()[item.id] || userStatus()[item.id] === 'offen'
+                                }">
                       @if (userStatus()[item.id] === 'in_arbeit') { In Arbeit }
                       @else if (userStatus()[item.id] === 'erledigt') { Erledigt }
                       @else { Offen }
                     </span>
+
                   </div>
                   }
                 </div>
@@ -368,8 +357,8 @@
           </p-accordion>
 
         </p-accordion-content>
-
       </p-accordion-panel>
+
       }
     </p-accordion>
 

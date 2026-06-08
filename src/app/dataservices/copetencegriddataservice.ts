@@ -47,13 +47,13 @@ export class Copetencegriddataservice {
     { lernfeldId: '3', bereichId: 't1', lfspos: '3', beschreibung: 'Ich kann reaktive Single-Page-Apps mit Angular bauen.' },
     { lernfeldId: '4', bereichId: 't1', lfspos: '4', beschreibung: 'Ich kann reaktive Single-Page-Apps mit Angular bauen.' },
     { lernfeldId: '5', bereichId: 't1', lfspos: '5', beschreibung: 'Ich kann reaktive Single-Page-Apps mit Angular bauen.' },
-    { lernfeldId: '5', bereichId: 't1', lfspos: '6', beschreibung: 'Ich kann reaktive Single-Page-Apps mit Angular bauen.' },
-    { lernfeldId: '5', bereichId: 't1', lfspos: '7', beschreibung: 'Ich kann reaktive Single-Page-Apps mit Angular bauen.' },
+    { lernfeldId: '6', bereichId: 't1', lfspos: '6', beschreibung: 'Ich kann reaktive Single-Page-Apps mit Angular bauen.' },
+    { lernfeldId: '22', bereichId: 't1', lfspos: '7', beschreibung: 'Ich kann reaktive Single-Page-Apps mit Angular bauen.' },
     
     // Zeile 2: Backend (t2)
-    { lernfeldId: '4', bereichId: 't2', lfspos: '1', beschreibung: 'Ich kann einen lokalen Node.js Server aufsetzen.' },
-    { lernfeldId: '5', bereichId: 't2', lfspos: '2', beschreibung: 'Ich kann eine REST-API mit Express programmieren.' },
-    { lernfeldId: '6', bereichId: 't2', lfspos: '3', beschreibung: 'Ich kann relationale Datenbanken designen und abfragen.' },
+    { lernfeldId: '19', bereichId: 't2', lfspos: '1', beschreibung: 'Ich kann einen lokalen Node.js Server aufsetzen.' },
+    { lernfeldId: '20', bereichId: 't2', lfspos: '2', beschreibung: 'Ich kann eine REST-API mit Express programmieren.' },
+    { lernfeldId: '21', bereichId: 't2', lfspos: '3', beschreibung: 'Ich kann relationale Datenbanken designen und abfragen.' },
     
     // Zeile 3: Soft Skills (t3)
     { lernfeldId: '7', bereichId: 't3', lfspos: '1', beschreibung: 'Ich kann Git für die Versionsverwaltung nutzen.' },
@@ -132,8 +132,8 @@ export class Copetencegriddataservice {
     { id: '34', lernfeldId: '17', text: 'Vektoren rechnerisch addieren und subtrahieren' },
     { id: '35', lernfeldId: '17', text: 'Pfeilketten im Koordinatensystem zeichnerisch verbinden' },
     
-    { id: '36', lernfeldId: '18', text: 'Prüfen, ob zwei Vektoren orthogonal (senkrecht) zueinander stehen' },
-    { id: '37', lernfeldId: '18', text: 'Den Schnittwinkel zwischen zwei Geraden im Raum ermitteln' }
+    { id: '36', lernfeldId: '22', text: 'Prüfen, ob zwei Vektoren orthogonal (senkrecht) zueinander stehen' },
+    { id: '37', lernfeldId: '22', text: 'Den Schnittwinkel zwischen zwei Geraden im Raum ermitteln' }
   ]);
 
   // Nach außen hin als schreibgeschützte Signals freigeben // macht keins sinnn da später immer gefilterte tabellen zurück kommen
